@@ -10,12 +10,22 @@ than marketing copy.
 
 ---
 
-## Sections (the four required, one continuous story)
+## Project Overview
 
-1. **Hero — Data Transformation Field.** A `Three.js` / R3F point cloud (3,200
-   particles) morphs from chaotic scatter into an ordered "rope grid" that
-   follows the cursor with a trailing wave, then relaxes back to chaos when
-   idle. Optional generative **ambient audio** brightens as the field organizes.
+Xai is a one-page marketing/product experience built to demonstrate advanced
+front-end animation and interaction engineering. Instead of static hero
+imagery and copy, the whole page tells one continuous story — **Ingest →
+Analyze → Generate** — using live WebGL particle fields, scroll-driven
+timelines, and an interactive "run inference" demo that resolves noisy data
+into a readable insight.
+
+The four core sections:
+
+1. **Hero — Data Transformation Field.** A Three.js / React Three Fiber point
+   cloud (3,200 particles) morphs from chaotic scatter into an ordered "rope
+   grid" that follows the cursor with a trailing wave, then relaxes back to
+   chaos when idle. Optional generative **ambient audio** brightens as the
+   field organizes.
 2. **Interactive Insight Flow.** A **horizontally** scroll-pinned pipeline —
    **Ingest → Analyze → Generate** — driven by **GSAP + ScrollTrigger**
    (`pin` + `containerAnimation`) so each stage's geometry line-draws in as it
@@ -23,35 +33,40 @@ than marketing copy.
    reduced-motion.
 3. **Intelligence Command Workspace.** A working telemetry deck: switchable
    views (spectrogram / payloads / rules), a radial vector radar, a morphing
-   waveform, live node selection, executable rules — all with tactile **Web
-   Audio** feedback.
-4. **Signature Interaction — Live Inference Field (the WOW).** The payoff of the
-   same narrative: a 3D cloud of raw signals you can drag to orbit. Press **Run
-   inference** and watch Xai link the points, sweep the network, and resolve the
-   noise into behavioural clusters and flagged anomalies — ending on a
-   dashboard-style insight readout with a confidence score.
+   waveform, live node selection, and executable rules — all with tactile
+   **Web Audio** feedback.
+4. **Signature Interaction — Live Inference Field (the "wow" moment).** The
+   payoff of the same narrative: a 3D cloud of raw signals you can drag to
+   orbit. Press **Run inference** and watch Xai link the points, sweep the
+   network, and resolve the noise into behavioural clusters and flagged
+   anomalies — ending on a dashboard-style insight readout with a confidence
+   score.
 
 Plus a **Footer** (CTA, live system telemetry, navigation matrix, newsletter),
-a sticky **glass navbar** with active-section highlighting + mobile sheet, and a
-top **scroll-progress** bar.
+a sticky **glass navbar** with active-section highlighting + mobile sheet, and
+a top **scroll-progress** bar.
 
-## Technical approach
+## Technical Approach
 
 - **Rendering strategy.** WebGL/Canvas scenes are client-only. The R3F hero
   loads through a dynamic `SceneWrapper` (`ssr: false`); GSAP/ScrollTrigger are
   dynamically imported inside effects so the server never touches `window`.
-- **Animation stack.** Framer Motion for UI choreography, `layoutId`
-  transitions and reveals; **GSAP + ScrollTrigger** for the horizontal
-  pinned Insight Flow (`containerAnimation`-driven line-draws); Three.js +
-  React Three Fiber for the hero field and the Live Inference Field.
+- **Animation stack.** Framer Motion drives UI choreography, `layoutId`
+  transitions, and section reveals. GSAP + ScrollTrigger drives the
+  horizontal pinned Insight Flow (`containerAnimation`-based line-draws).
+  Three.js + React Three Fiber renders the hero field and the Live Inference
+  Field.
 - **Performance.** Per-frame values (particle buffers, camera angles) live in
-  refs — never React state — to keep the render loop off the main React tree.
-- **Reduced motion** is respected in shared reveal wrappers.
+  refs — never React state — to keep the render loop off the main React tree
+  and avoid unnecessary re-renders.
+- **Accessibility.** `prefers-reduced-motion` is respected in shared reveal
+  wrappers, and the horizontally-pinned section degrades to a vertical stack
+  on mobile / reduced-motion.
+- **Audio.** A single shared Web Audio engine (`lib/sound.ts`) replaced three
+  duplicated synth implementations, reusing one `AudioContext` across the
+  dashboard, signature interaction, and footer.
 
-## Architecture & reusable components
-
-The refactor pulled repeated markup and logic into a small, typed component
-library so sections stay declarative and DRY:
+## Architecture
 
 ```
 xai-workspace/
@@ -69,37 +84,32 @@ xai-workspace/
 │                         #   SignatureInteraction, Footer
 └─ lib/
    ├─ constants.ts        # site copy, nav links, section ids, capabilities
-   ├─ sound.ts            # single shared Web Audio engine (was duplicated x3)
+   ├─ sound.ts            # single shared Web Audio engine
    ├─ ambientSound.ts     # generative hero ambient music
    └─ utils.ts            # cn() = clsx + tailwind-merge
 ```
 
-Key cleanups made during the refactor:
+## Tech Stack
 
-- **Removed 3 copies** of the Web Audio synth (Dashboard, Synthesizer, Footer)
-  into one reusable `lib/sound.ts` that reuses a single `AudioContext`.
-- **Introduced reusable primitives** (`Button`, `Badge`, `SectionHeading`,
-  `Container`, `Reveal`, `Magnetic`, `Marquee`, `GlassPanel`) to replace
-  copy-pasted inline markup.
-- **Added the missing navigation layer** (navbar + scroll progress) with
-  IntersectionObserver-based active-section state.
-- **Added GSAP** — required by the brief but previously unused — via the
-  horizontal pinned Insight Flow (ScrollTrigger `pin` + `containerAnimation`).
-- **Rebuilt the WOW section** so it's the narrative payoff (Live Inference
-  Field) instead of an off-theme math plotter.
-- Real page metadata; section anchors wired to the nav.
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router, React Compiler) |
+| UI library | React 19, TypeScript |
+| 3D / WebGL | Three.js, @react-three/fiber, @react-three/drei |
+| Scroll animation | GSAP + ScrollTrigger |
+| UI animation | Framer Motion |
+| Styling | Tailwind CSS v4 |
+| Audio | Web Audio API |
+| Icons | lucide-react |
+| Utilities | clsx, tailwind-merge |
 
-## Tech stack
-
-Next.js 16 (App Router, React Compiler) · React 19 · TypeScript · Three.js +
-@react-three/fiber · GSAP + ScrollTrigger · Framer Motion · Tailwind CSS v4 ·
-Web Audio API · lucide-react.
-
-## Run locally
+## Run Locally
 
 Requires **Node 18.18+**.
 
 ```bash
+git clone <this-repo-url>
+cd xai-workspace
 npm install
 npm run dev      # http://localhost:3000
 ```
@@ -110,9 +120,34 @@ Production build:
 npm run build && npm run start
 ```
 
+Lint:
+
+```bash
+npm run lint
+```
+
 Deploy: zero-config on **Vercel**.
 
-## Video walkthrough
+## Key Animation & Interaction Decisions
 
-_Add a short (2-3 min) Google Drive / YouTube link explaining the key animation
-and interaction decisions._
+A full walkthrough of these decisions is in the video below. In short:
+
+- **Particles instead of images** in the hero to make the "raw data → order"
+  metaphor literal and physically interactive (cursor-following rope grid).
+- **GSAP `containerAnimation`** (not native scroll-snap) for the horizontal
+  Insight Flow, so the pin and the line-draw timelines stay perfectly in
+  sync with vertical scroll input.
+- **Refs over state** for anything running every frame (particle positions,
+  camera angles) to keep 60fps and avoid React re-render overhead in the
+  render loop.
+- **A single deferred "Run inference" action** in the signature section
+  rather than autoplay, so the payoff feels earned and user-triggered.
+- **Reduced-motion and mobile fallbacks** built in from the start rather than
+  bolted on, since the whole page depends on motion to tell its story.
+
+## Video Walkthrough
+
+📹 **[Watch the project walkthrough video](https://drive.google.com/PASTE_YOUR_SHARE_LINK_HERE)**
+
+_(Replace the link above with your public Google Drive or YouTube share link.
+See `VIDEO_SCRIPT.md` for the full recording script.)_
