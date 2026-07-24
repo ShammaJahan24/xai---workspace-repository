@@ -34,7 +34,7 @@ export default function Footer() {
     <footer
       ref={ref}
       onPointerMove={onMove}
-      className="group/foot relative overflow-hidden border-t border-zinc-800/60 bg-zinc-950"
+      className="group/foot relative overflow-hidden border-t border-slate-200/70 bg-white dark:border-zinc-800/60 dark:bg-zinc-950"
       style={{ ['--mx' as string]: '50%', ['--my' as string]: '50%' }}
     >
       {/* cursor-follow spotlight */}
@@ -53,9 +53,9 @@ export default function Footer() {
             <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-linear-to-tr from-cyan-400 to-violet-500 font-mono text-sm font-extrabold text-zinc-950">
               X
             </span>
-            <span className="text-lg font-semibold tracking-tight text-zinc-100">{SITE.name}</span>
+            <span className="text-lg font-semibold tracking-tight text-slate-900 dark:text-zinc-100">{SITE.name}</span>
           </div>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-zinc-400">
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
             Ready to prototype interactions that actually feel right? Drop your
             email and the team will reach out.
           </p>
@@ -68,12 +68,12 @@ export default function Footer() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@company.com"
-              className="flex-1 rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-600 outline-none transition-colors duration-300 focus:border-cyan-500/60"
+              className="flex-1 rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-colors duration-300 focus:border-cyan-500/60 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-100 dark:placeholder-zinc-600"
             />
             <Magnetic strength={0.35}>
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 rounded-xl bg-zinc-100 px-4 py-2.5 text-sm font-medium text-zinc-950 transition-transform duration-200 hover:scale-[1.04] active:scale-95"
+                className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition-transform duration-200 hover:scale-[1.04] active:scale-95 dark:bg-zinc-100 dark:text-zinc-950"
               >
                 {sent ? <Check className="h-4 w-4" /> : <Send className="h-4 w-4" />}
                 {sent ? 'Sent' : 'Get in touch'}
@@ -92,7 +92,7 @@ export default function Footer() {
 
         {/* Right: quick links */}
         <div className="flex flex-col items-start gap-4 lg:items-end">
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500">
+          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-zinc-500">
             Follow along
           </span>
           <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ export default function Footer() {
                 href="#"
                 aria-label={label}
                 onMouseEnter={() => playUISound('hover')}
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-800 text-zinc-400 transition-all duration-300 hover:-translate-y-0.5 hover:border-zinc-600 hover:text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-500 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-400 hover:text-slate-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-white"
               >
                 <Icon className="h-4 w-4" />
               </a>
@@ -115,15 +115,15 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="relative border-t border-zinc-900">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs text-zinc-500 sm:flex-row">
+      <div className="relative border-t border-slate-200 dark:border-zinc-900">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs text-slate-500 dark:text-zinc-500 sm:flex-row">
           <div className="flex items-center gap-3 font-mono">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
             <span>All systems nominal</span>
-            <span className="text-zinc-700">·</span>
+            <span className="text-slate-300 dark:text-zinc-700">·</span>
             <span>© 2026 {SITE.name}</span>
           </div>
 
@@ -132,7 +132,7 @@ export default function Footer() {
               <a
                 key={l}
                 href="#"
-                className="relative transition-colors duration-300 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan-400 after:transition-[width] after:duration-300 hover:text-zinc-200 hover:after:w-full"
+                className="relative transition-colors duration-300 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan-400 after:transition-[width] after:duration-300 hover:text-slate-800 dark:hover:text-zinc-200 hover:after:w-full"
               >
                 {l}
               </a>
@@ -142,7 +142,7 @@ export default function Footer() {
                 playUISound('top')
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-800 px-2.5 py-1.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-zinc-600 hover:text-white"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-400 hover:text-slate-900 dark:border-zinc-800 dark:hover:border-zinc-600 dark:hover:text-white"
             >
               <ArrowUp className="h-3.5 w-3.5" />
               Top

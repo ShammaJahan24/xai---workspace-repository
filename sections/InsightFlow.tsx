@@ -144,21 +144,21 @@ export default function InsightFlow() {
     <section
       ref={sectionRef}
       id={SECTIONS.flow}
-      className="relative overflow-hidden border-y border-zinc-800/40 md:h-screen"
+      className="relative overflow-hidden border-y border-slate-200/40 dark:border-zinc-800/40 md:h-screen"
     >
       {/* Pinned header overlay (desktop) */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-20 hidden px-8 pt-24 md:block">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-950/40 px-3 py-1 font-mono text-xs text-cyan-400">
+          <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3 py-1 font-mono text-xs text-indigo-600 dark:border-cyan-500/20 dark:bg-cyan-950/40 dark:text-cyan-400">
             <span className="h-1.5 w-1.5 animate-ping rounded-full bg-cyan-400" />
             HOW XAI WORKS — INGEST · ANALYZE · GENERATE
           </div>
-          <div className="font-mono text-xs text-zinc-500">
+          <div className="font-mono text-xs text-slate-500 dark:text-zinc-500">
             STAGE <span className="text-cyan-400">{STAGES[active].number}</span> / 03
           </div>
         </div>
         {/* progress conduit */}
-        <div className="mx-auto mt-4 h-px max-w-7xl bg-zinc-800">
+        <div className="mx-auto mt-4 h-px max-w-7xl bg-slate-100 dark:bg-zinc-800">
           <div
             className="h-px bg-linear-to-r from-cyan-400 to-violet-500 transition-[width] duration-150"
             style={{ width: `${Math.max(4, progress * 100)}%` }}
@@ -191,25 +191,25 @@ function FlowPanel({ stage, index, active }: { stage: Stage; index: number; acti
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
         {/* Copy */}
         <div className={cn('transition-opacity duration-500', active ? 'opacity-100' : 'md:opacity-40')}>
-          <div className="flex items-center gap-3 font-mono text-xs text-zinc-400">
+          <div className="flex items-center gap-3 font-mono text-xs text-slate-600 dark:text-zinc-400">
             <span className="text-cyan-400">PHASE {stage.number}</span>
             <span>—</span>
             <span>{stage.subtitle}</span>
           </div>
           <div className="mt-4 flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/60 text-cyan-400">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/60 text-cyan-400">
               <Icon className="h-5 w-5" />
             </span>
-            <h3 className="text-3xl font-semibold tracking-tight text-zinc-100 sm:text-4xl">
+            <h3 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-zinc-100 sm:text-4xl">
               {stage.title}
             </h3>
           </div>
-          <p className="mt-4 max-w-md text-zinc-400">{stage.description}</p>
+          <p className="mt-4 max-w-md text-slate-600 dark:text-zinc-400">{stage.description}</p>
 
-          <div className="mt-6 flex gap-8 border-t border-zinc-800/60 pt-4">
+          <div className="mt-6 flex gap-8 border-t border-slate-200/60 dark:border-zinc-800/60 pt-4">
             {stage.metrics.map((m) => (
               <motion.div key={m.label} whileHover={{ y: -3 }} className="cursor-default">
-                <div className="text-xs text-zinc-500">{m.label}</div>
+                <div className="text-xs text-slate-500 dark:text-zinc-500">{m.label}</div>
                 <div className="mt-0.5 font-mono text-lg font-semibold text-cyan-400">{m.val}</div>
               </motion.div>
             ))}
@@ -219,7 +219,7 @@ function FlowPanel({ stage, index, active }: { stage: Stage; index: number; acti
         {/* Geometry */}
         <div className="relative mx-auto aspect-square w-full max-w-[440px]">
           <Visual />
-          <span className="pointer-events-none absolute right-2 top-2 font-mono text-[10px] text-zinc-700">
+          <span className="pointer-events-none absolute right-2 top-2 font-mono text-[10px] text-slate-300 dark:text-zinc-700">
             0{index + 1}
           </span>
         </div>

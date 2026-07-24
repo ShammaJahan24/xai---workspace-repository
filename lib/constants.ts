@@ -17,14 +17,6 @@ export const SECTIONS = {
 
 export type Theme = 'light' | 'dark'
 
-/** Which theme each section drives as it scrolls into view. */
-export const SECTION_THEME: Record<string, Theme> = {
-  [SECTIONS.overview]: 'light',
-  [SECTIONS.flow]: 'dark',
-  [SECTIONS.workspace]: 'light',
-  [SECTIONS.lab]: 'dark',
-}
-
 export const NAV_LINKS = [
   { href: `#${SECTIONS.flow}`, label: 'How it works' },
   { href: `#${SECTIONS.workspace}`, label: 'Workspace' },

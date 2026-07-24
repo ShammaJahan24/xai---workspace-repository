@@ -95,9 +95,9 @@ const ROWS: Row[] = [
 ]
 
 const STATUS_STYLE: Record<Row['status'], string> = {
-  Ready: 'text-emerald-700 bg-emerald-500/10 border-emerald-500/25',
-  Draft: 'text-amber-700 bg-amber-500/10 border-amber-500/25',
-  Shared: 'text-indigo-700 bg-indigo-500/10 border-indigo-500/25',
+  Ready: 'text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/25',
+  Draft: 'text-amber-700 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+  Shared: 'text-indigo-700 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/25',
 }
 
 const FEED_SEED = [
@@ -141,10 +141,9 @@ export default function DashboardPreview() {
   const current = NAV.find((n) => n.id === view)!
 
   return (
-    <section id={SECTIONS.workspace} className="relative border-t border-slate-200/70 py-24 text-slate-900">
+    <section id={SECTIONS.workspace} className="relative border-t border-slate-200/70 dark:border-zinc-800/60 py-24 text-slate-900 dark:text-zinc-100">
       <Container>
         <SectionHeading
-          tone="light"
           eyebrow="The Workspace"
           title="Where prototypes come together."
           description="A working slice of the real product — route the sidebar, press ⌘K to jump anywhere, switch the time range, inspect a flow. It behaves like software, not a screenshot."
@@ -155,17 +154,17 @@ export default function DashboardPreview() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mt-12 overflow-hidden rounded-3xl border border-slate-200 bg-white/80 shadow-2xl shadow-slate-900/5 backdrop-blur-xl"
+          className="relative mt-12 overflow-hidden rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/60 shadow-2xl shadow-slate-900/5 dark:shadow-black/30 backdrop-blur-xl"
         >
           {/* window chrome */}
-          <div className="flex h-11 items-center justify-between border-b border-slate-200 bg-slate-50/80 px-4 font-mono text-xs">
+          <div className="flex h-11 items-center justify-between border-b border-slate-200 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/60 px-4 font-mono text-xs">
             <div className="flex items-center gap-2">
               <span className="flex gap-1.5">
                 <span className="h-3 w-3 rounded-full bg-red-300" />
                 <span className="h-3 w-3 rounded-full bg-yellow-300" />
                 <span className="h-3 w-3 rounded-full bg-green-300" />
               </span>
-              <span className="ml-2 border-l border-slate-200 pl-3 text-slate-400">
+              <span className="ml-2 border-l border-slate-200 dark:border-zinc-800 pl-3 text-slate-400 dark:text-zinc-600">
                 kinetic / {current.label.toLowerCase()}
               </span>
             </div>
@@ -174,11 +173,11 @@ export default function DashboardPreview() {
                 setPaletteOpen(true)
                 playUISound('scan')
               }}
-              className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-slate-500 transition-colors duration-300 hover:border-slate-300 hover:text-slate-700"
+              className="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-2.5 py-1 text-slate-500 dark:text-zinc-500 transition-colors duration-300 hover:border-slate-300 dark:hover:border-zinc-700 hover:text-slate-700 dark:hover:text-zinc-300"
             >
               <Search className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">Search</span>
-              <kbd className="ml-1 hidden items-center gap-0.5 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 sm:flex">
+              <kbd className="ml-1 hidden items-center gap-0.5 rounded bg-slate-100 dark:bg-zinc-800 px-1.5 py-0.5 text-[10px] text-slate-500 dark:text-zinc-500 sm:flex">
                 <Command className="h-2.5 w-2.5" />K
               </kbd>
             </button>
@@ -186,7 +185,7 @@ export default function DashboardPreview() {
 
           <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr]">
             {/* sidebar */}
-            <aside className="flex gap-1 overflow-x-auto border-b border-slate-200 bg-slate-50/50 p-3 lg:flex-col lg:overflow-visible lg:border-b-0 lg:border-r">
+            <aside className="flex gap-1 overflow-x-auto border-b border-slate-200 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/40 p-3 lg:flex-col lg:overflow-visible lg:border-b-0 lg:border-r">
               {NAV.map((n) => {
                 const Icon = n.icon
                 const active = view === n.id
@@ -196,7 +195,7 @@ export default function DashboardPreview() {
                     onClick={() => go(n.id)}
                     className={cn(
                       'relative flex shrink-0 items-center gap-2.5 rounded-xl px-3 py-2 text-sm transition-colors duration-300',
-                      active ? 'text-slate-900' : 'text-slate-500 hover:text-slate-800',
+                      active ? 'text-slate-900 dark:text-zinc-100' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-800 dark:hover:text-zinc-200',
                     )}
                   >
                     {active && (
@@ -206,19 +205,19 @@ export default function DashboardPreview() {
                         transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                       />
                     )}
-                    <Icon className={cn('relative h-4 w-4', active ? 'text-indigo-600' : '')} />
+                    <Icon className={cn('relative h-4 w-4', active ? 'text-indigo-600 dark:text-indigo-400' : '')} />
                     <span className="relative">{n.label}</span>
                   </button>
                 )
               })}
 
-              <div className="mt-auto hidden rounded-xl border border-slate-200 bg-white p-3 lg:block">
-                <p className="text-xs text-slate-500">Preview health</p>
+              <div className="mt-auto hidden rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-3 lg:block">
+                <p className="text-xs text-slate-500 dark:text-zinc-500">Preview health</p>
                 <div className="mt-2 flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-emerald-600">60 FPS</span>
-                  <span className="font-mono text-[10px] text-slate-400">smooth</span>
+                  <span className="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">60 FPS</span>
+                  <span className="font-mono text-[10px] text-slate-400 dark:text-zinc-600">smooth</span>
                 </div>
-                <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-slate-200">
+                <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-slate-200 dark:bg-zinc-700">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: '96%' }}
@@ -234,11 +233,11 @@ export default function DashboardPreview() {
             <div className="min-w-0 p-5 sm:p-7">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900">{current.label}</h3>
-                  <p className="text-xs text-slate-500">Live workspace · updated just now</p>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-zinc-100">{current.label}</h3>
+                  <p className="text-xs text-slate-500 dark:text-zinc-500">Live workspace · updated just now</p>
                 </div>
                 {view === 'overview' && (
-                  <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 p-1">
+                  <div className="flex items-center gap-1 rounded-full border border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 p-1">
                     {RANGES.map((r) => (
                       <button
                         key={r.id}
@@ -248,13 +247,13 @@ export default function DashboardPreview() {
                         }}
                         className={cn(
                           'relative rounded-full px-3.5 py-1.5 text-xs transition-colors duration-300',
-                          range === r.id ? 'text-white' : 'text-slate-500 hover:text-slate-800',
+                          range === r.id ? 'text-white dark:text-zinc-950' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-800 dark:hover:text-zinc-200',
                         )}
                       >
                         {range === r.id && (
                           <motion.span
                             layoutId="rangePill"
-                            className="absolute inset-0 rounded-full bg-slate-900"
+                            className="absolute inset-0 rounded-full bg-slate-900 dark:bg-zinc-100"
                             transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                           />
                         )}
@@ -322,7 +321,7 @@ function Card({ children, className }: { children: React.ReactNode; className?: 
       variants={rise}
       whileHover={{ y: -4 }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-      className={cn('rounded-2xl border border-slate-200 bg-white p-5 transition-colors duration-300 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/5', className)}
+      className={cn('rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 transition-colors duration-300 hover:border-slate-300 dark:hover:border-zinc-700 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:shadow-black/30', className)}
     >
       {children}
     </motion.div>
@@ -337,12 +336,12 @@ function Overview({ range }: { range: Range }) {
       <Panel className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {KPIS[range].map((k) => (
           <Card key={k.label}>
-            <p className="text-xs text-slate-500">{k.label}</p>
-            <p className="mt-1.5 text-2xl font-semibold tabular-nums text-slate-900">
+            <p className="text-xs text-slate-500 dark:text-zinc-500">{k.label}</p>
+            <p className="mt-1.5 text-2xl font-semibold tabular-nums text-slate-900 dark:text-zinc-100">
               <CountUp value={k.value} />
             </p>
             <div className="mt-1 flex items-center justify-between">
-              <span className={cn('text-xs', k.delta >= 0 ? 'text-emerald-600' : 'text-rose-500')}>
+              <span className={cn('text-xs', k.delta >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400')}>
                 {k.delta >= 0 ? '▲' : '▼'} {Math.abs(k.delta)}%
               </span>
             </div>
@@ -354,8 +353,8 @@ function Overview({ range }: { range: Range }) {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.7fr_1fr]">
         <Card>
           <div className="mb-3 flex items-center justify-between">
-            <p className="text-sm font-medium text-slate-700">Preview sessions</p>
-            <span className="flex items-center gap-1 font-mono text-xs text-indigo-600">
+            <p className="text-sm font-medium text-slate-700 dark:text-zinc-300">Preview sessions</p>
+            <span className="flex items-center gap-1 font-mono text-xs text-indigo-600 dark:text-indigo-400">
               <TrendingUp className="h-3.5 w-3.5" /> {range}
             </span>
           </div>
@@ -364,13 +363,13 @@ function Overview({ range }: { range: Range }) {
           </div>
         </Card>
         <Card>
-          <p className="mb-4 text-sm font-medium text-slate-700">Interaction mix</p>
+          <p className="mb-4 text-sm font-medium text-slate-700 dark:text-zinc-300">Interaction mix</p>
           <Donut />
         </Card>
       </div>
 
       <Card>
-        <p className="mb-3 text-sm font-medium text-slate-700">Activity</p>
+        <p className="mb-3 text-sm font-medium text-slate-700 dark:text-zinc-300">Activity</p>
         <ActivityFeed />
       </Card>
     </div>
@@ -386,17 +385,17 @@ function Prototypes() {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr_1fr]">
       <div>
-        <div className="mb-3 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 transition-colors focus-within:border-indigo-400">
-          <Search className="h-4 w-4 text-slate-400" />
+        <div className="mb-3 flex items-center gap-2 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-2 transition-colors focus-within:border-indigo-400">
+          <Search className="h-4 w-4 text-slate-400 dark:text-zinc-600" />
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Filter prototypes…"
-            className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 outline-none"
+            className="w-full bg-transparent text-sm text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-600 outline-none"
           />
         </div>
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-          {rows.length === 0 && <p className="px-4 py-8 text-center text-sm text-slate-400">No prototypes match “{q}”.</p>}
+        <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+          {rows.length === 0 && <p className="px-4 py-8 text-center text-sm text-slate-400 dark:text-zinc-600">No prototypes match “{q}”.</p>}
           {rows.map((r, i) => {
             const active = selected?.id === r.id
             return (
@@ -410,11 +409,11 @@ function Prototypes() {
                   setSelected(active ? null : r)
                   playUISound('scan')
                 }}
-                className={cn('flex w-full items-center justify-between gap-3 border-b border-slate-100 px-4 py-3 text-left text-sm transition-colors duration-200 last:border-0', active ? 'bg-indigo-500/10' : 'hover:bg-slate-50')}
+                className={cn('flex w-full items-center justify-between gap-3 border-b border-slate-100 dark:border-zinc-800/60 px-4 py-3 text-left text-sm transition-colors duration-200 last:border-0', active ? 'bg-indigo-500/10' : 'hover:bg-slate-50 dark:hover:bg-zinc-900/50')}
               >
                 <div className="min-w-0">
-                  <p className="truncate text-slate-800">{r.name}</p>
-                  <p className="font-mono text-xs text-slate-400">{r.id} · {r.transitions} transitions</p>
+                  <p className="truncate text-slate-800 dark:text-zinc-200">{r.name}</p>
+                  <p className="font-mono text-xs text-slate-400 dark:text-zinc-600">{r.id} · {r.transitions} transitions</p>
                 </div>
                 <span className={cn('shrink-0 rounded-full border px-2.5 py-1 text-[11px]', STATUS_STYLE[r.status])}>{r.status}</span>
               </motion.button>
@@ -430,12 +429,12 @@ function Prototypes() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 12 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-2xl border border-slate-200 bg-white p-5"
+          className="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5"
         >
           {selected ? (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-sm text-indigo-600">{selected.id}</span>
+                <span className="font-mono text-sm text-indigo-600 dark:text-indigo-400">{selected.id}</span>
                 <span className={cn('rounded-full border px-2.5 py-1 text-[11px]', STATUS_STYLE[selected.status])}>{selected.status}</span>
               </div>
               <dl className="space-y-2 text-xs">
@@ -445,18 +444,18 @@ function Prototypes() {
                   ['Transitions', String(selected.transitions)],
                   ['Motion', selected.note],
                 ].map(([k, v]) => (
-                  <div key={k} className="flex items-center justify-between gap-4 border-b border-slate-100 pb-2">
-                    <dt className="text-slate-500">{k}</dt>
-                    <dd className="text-right font-mono text-slate-700">{v}</dd>
+                  <div key={k} className="flex items-center justify-between gap-4 border-b border-slate-100 dark:border-zinc-800/60 pb-2">
+                    <dt className="text-slate-500 dark:text-zinc-500">{k}</dt>
+                    <dd className="text-right font-mono text-slate-700 dark:text-zinc-300">{v}</dd>
                   </div>
                 ))}
               </dl>
-              <button onClick={() => playUISound('trigger')} className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-2 text-xs font-medium text-white transition-transform duration-200 hover:-translate-y-0.5 active:scale-95">
+              <button onClick={() => playUISound('trigger')} className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 dark:bg-zinc-100 py-2 text-xs font-medium text-white dark:text-zinc-950 transition-transform duration-200 hover:-translate-y-0.5 active:scale-95">
                 <Play className="h-3.5 w-3.5" /> Open preview
               </button>
             </div>
           ) : (
-            <div className="flex h-full min-h-[220px] flex-col items-center justify-center text-center text-slate-400">
+            <div className="flex h-full min-h-[220px] flex-col items-center justify-center text-center text-slate-400 dark:text-zinc-600">
               <MonitorSmartphone className="h-6 w-6" />
               <p className="mt-2 text-sm">Select a prototype to inspect its motion.</p>
             </div>
@@ -481,15 +480,15 @@ function Components() {
         return (
           <Card key={m.id}>
             <div className="flex items-center justify-between">
-              <p className="font-medium text-slate-900">{m.name}</p>
-              <span className="rounded-full border border-slate-200 px-2 py-0.5 font-mono text-[10px] text-slate-500">{m.instances}×</span>
+              <p className="font-medium text-slate-900 dark:text-zinc-100">{m.name}</p>
+              <span className="rounded-full border border-slate-200 dark:border-zinc-800 px-2 py-0.5 font-mono text-[10px] text-slate-500 dark:text-zinc-500">{m.instances}×</span>
             </div>
-            <p className="mt-1 text-xs text-slate-500">{running ? 'Syncing from Figma…' : 'In sync'}</p>
-            <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
+            <p className="mt-1 text-xs text-slate-500 dark:text-zinc-500">{running ? 'Syncing from Figma…' : 'In sync'}</p>
+            <div className="mt-4 flex items-center justify-between text-xs text-slate-500 dark:text-zinc-500">
               <span>Adoption</span>
-              <span className="font-mono text-slate-700">{m.usage}%</span>
+              <span className="font-mono text-slate-700 dark:text-zinc-300">{m.usage}%</span>
             </div>
-            <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-200">
+            <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-zinc-700">
               <motion.div initial={{ width: 0 }} whileInView={{ width: `${m.usage}%` }} viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }} className="h-full rounded-full bg-linear-to-r from-indigo-500 to-cyan-400" />
             </div>
             <button
@@ -499,7 +498,7 @@ function Components() {
                 setTimeout(() => setBusy((b) => (b === m.id ? null : b)), 2200)
               }}
               disabled={running}
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 py-2 text-xs text-slate-700 transition-colors duration-300 hover:bg-slate-50 disabled:opacity-50"
+              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-zinc-800 py-2 text-xs text-slate-700 dark:text-zinc-300 transition-colors duration-300 hover:bg-slate-50 dark:hover:bg-zinc-900/50 disabled:opacity-50"
             >
               <Play className="h-3.5 w-3.5" />
               {running ? 'Working…' : 'Sync'}
@@ -523,20 +522,20 @@ function Flows() {
       {rules.map((r) => {
         const on = prefs[r.id]
         return (
-          <motion.div key={r.id} variants={rise} className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-4">
+          <motion.div key={r.id} variants={rise} className="flex items-center justify-between rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4">
             <div>
-              <p className="text-sm text-slate-900">{r.name}</p>
-              <p className="text-xs text-slate-500">{r.desc}</p>
+              <p className="text-sm text-slate-900 dark:text-zinc-100">{r.name}</p>
+              <p className="text-xs text-slate-500 dark:text-zinc-500">{r.desc}</p>
             </div>
             <button
               onClick={() => {
                 setPrefs((p) => ({ ...p, [r.id]: !p[r.id] }))
                 playUISound('toggle')
               }}
-              className={cn('relative h-6 w-11 shrink-0 rounded-full transition-colors duration-300', on ? 'bg-indigo-500' : 'bg-slate-300')}
+              className={cn('relative h-6 w-11 shrink-0 rounded-full transition-colors duration-300', on ? 'bg-indigo-500' : 'bg-slate-300 dark:bg-zinc-600')}
               aria-pressed={on}
             >
-              <motion.span layout transition={{ type: 'spring', stiffness: 500, damping: 34 }} className={cn('absolute top-0.5 h-5 w-5 rounded-full bg-white shadow', on ? 'right-0.5' : 'left-0.5')} />
+              <motion.span layout transition={{ type: 'spring', stiffness: 500, damping: 34 }} className={cn('absolute top-0.5 h-5 w-5 rounded-full bg-white dark:bg-zinc-900 shadow', on ? 'right-0.5' : 'left-0.5')} />
             </button>
           </motion.div>
         )
@@ -552,19 +551,19 @@ function Handoff() {
     { name: 'React snippets · Checkout', date: 'Jul 18, 2026', size: '96 KB' },
   ]
   return (
-    <Panel className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+    <Panel className="overflow-hidden rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
       {items.map((r) => (
-        <motion.div key={r.name} variants={rise} className="flex items-center justify-between border-b border-slate-100 px-4 py-4 text-sm transition-colors duration-200 last:border-0 hover:bg-slate-50">
+        <motion.div key={r.name} variants={rise} className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800/60 px-4 py-4 text-sm transition-colors duration-200 last:border-0 hover:bg-slate-50 dark:hover:bg-zinc-900/50">
           <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-600">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
               <Share2 className="h-4 w-4" />
             </span>
             <div>
-              <p className="text-slate-800">{r.name}</p>
-              <p className="text-xs text-slate-400">{r.date} · {r.size}</p>
+              <p className="text-slate-800 dark:text-zinc-200">{r.name}</p>
+              <p className="text-xs text-slate-400 dark:text-zinc-600">{r.date} · {r.size}</p>
             </div>
           </div>
-          <button onClick={() => playUISound('click')} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 transition-colors duration-300 hover:bg-slate-50 hover:text-slate-900">
+          <button onClick={() => playUISound('click')} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-zinc-800 px-3 py-1.5 text-xs text-slate-600 dark:text-zinc-400 transition-colors duration-300 hover:bg-slate-50 dark:hover:bg-zinc-900/50 hover:text-slate-900 dark:hover:text-zinc-100">
             <Download className="h-3.5 w-3.5" /> Export
           </button>
         </motion.div>
@@ -646,8 +645,8 @@ function Donut() {
         {DISTRIBUTION.map((d) => (
           <li key={d.label} className="flex items-center gap-2 text-sm">
             <span className="h-2.5 w-2.5 rounded-sm" style={{ background: d.color }} />
-            <span className="text-slate-500">{d.label}</span>
-            <span className="ml-auto tabular-nums text-slate-800">{d.value}%</span>
+            <span className="text-slate-500 dark:text-zinc-500">{d.label}</span>
+            <span className="ml-auto tabular-nums text-slate-800 dark:text-zinc-200">{d.value}%</span>
           </li>
         ))}
       </ul>
@@ -679,11 +678,11 @@ function ActivityFeed() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ layout: { type: 'spring', stiffness: 500, damping: 40 }, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs text-slate-600"
+            className="flex items-center gap-3 rounded-lg border border-slate-200 dark:border-zinc-800 bg-slate-50/70 dark:bg-zinc-900/50 px-3 py-2 text-xs text-slate-600 dark:text-zinc-400"
           >
             <Activity className="h-3.5 w-3.5 shrink-0 text-indigo-500" />
             <span className="truncate">{item.text}</span>
-            <span className="ml-auto shrink-0 font-mono text-[10px] text-slate-400">now</span>
+            <span className="ml-auto shrink-0 font-mono text-[10px] text-slate-400 dark:text-zinc-600">now</span>
           </motion.li>
         ))}
       </AnimatePresence>
@@ -732,7 +731,7 @@ function CommandPalette({ open, onClose, onPick }: { open: boolean; onClose: () 
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 z-30 flex items-start justify-center bg-slate-900/20 p-6 pt-20 backdrop-blur-sm"
+          className="absolute inset-0 z-30 flex items-start justify-center bg-slate-900/20 dark:bg-black/40 p-6 pt-20 backdrop-blur-sm"
         >
           <motion.div
             initial={{ opacity: 0, y: -12, scale: 0.98 }}
@@ -740,10 +739,10 @@ function CommandPalette({ open, onClose, onPick }: { open: boolean; onClose: () 
             exit={{ opacity: 0, y: -12, scale: 0.98 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl"
+            className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-2xl"
           >
-            <div className="flex items-center gap-3 border-b border-slate-200 px-4 py-3">
-              <Command className="h-4 w-4 text-indigo-600" />
+            <div className="flex items-center gap-3 border-b border-slate-200 dark:border-zinc-800 px-4 py-3">
+              <Command className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
               <input
                 ref={inputRef}
                 value={q}
@@ -752,14 +751,14 @@ function CommandPalette({ open, onClose, onPick }: { open: boolean; onClose: () 
                   setHi(0)
                 }}
                 placeholder="Jump to…"
-                className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 outline-none"
+                className="w-full bg-transparent text-sm text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-600 outline-none"
               />
-              <button onClick={onClose} className="text-slate-400 transition-colors hover:text-slate-700">
+              <button onClick={onClose} className="text-slate-400 dark:text-zinc-600 transition-colors hover:text-slate-700 dark:hover:text-zinc-300">
                 <X className="h-4 w-4" />
               </button>
             </div>
             <ul className="max-h-64 overflow-y-auto p-2">
-              {results.length === 0 && <li className="px-3 py-6 text-center text-sm text-slate-400">No matches.</li>}
+              {results.length === 0 && <li className="px-3 py-6 text-center text-sm text-slate-400 dark:text-zinc-600">No matches.</li>}
               {results.map((n, i) => {
                 const Icon = n.icon
                 return (
@@ -767,11 +766,11 @@ function CommandPalette({ open, onClose, onPick }: { open: boolean; onClose: () 
                     <button
                       onMouseEnter={() => setHi(i)}
                       onClick={() => onPick(n.id)}
-                      className={cn('flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors', i === hi ? 'bg-indigo-500/10 text-slate-900' : 'text-slate-600 hover:bg-slate-50')}
+                      className={cn('flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors', i === hi ? 'bg-indigo-500/10 text-slate-900 dark:text-zinc-100' : 'text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-900/50')}
                     >
-                      <Icon className={cn('h-4 w-4', i === hi ? 'text-indigo-600' : 'text-slate-400')} />
+                      <Icon className={cn('h-4 w-4', i === hi ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-zinc-600')} />
                       Go to {n.label}
-                      <ArrowRight className={cn('ml-auto h-3.5 w-3.5', i === hi ? 'text-indigo-600' : 'text-slate-300')} />
+                      <ArrowRight className={cn('ml-auto h-3.5 w-3.5', i === hi ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-300 dark:text-zinc-700')} />
                     </button>
                   </li>
                 )

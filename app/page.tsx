@@ -20,8 +20,11 @@ export default function Home() {
         <InsightFlow />
         <DashboardPreview />
 
-        {/* Signature interaction — the Motion Lab (dark) */}
-        <section id={SECTIONS.lab} className="relative border-t border-zinc-800/40 py-24 text-zinc-100">
+        {/* Signature interaction — the Motion Lab */}
+        <section
+          id={SECTIONS.lab}
+          className="relative border-t border-slate-200/40 py-24 text-slate-900 dark:border-zinc-800/40 dark:text-zinc-100"
+        >
           <Container>
             <SectionHeading
               eyebrow="Motion Lab"

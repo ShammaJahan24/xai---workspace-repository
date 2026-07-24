@@ -1,10 +1,31 @@
 'use client'
 
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react'
 import { motion } from 'framer-motion'
-import { SECTION_THEME, type Theme } from '@/lib/constants'
+import type { Theme } from '@/lib/constants'
 
-const ThemeCtx = createContext<Theme>('light')
+const STORAGE_KEY = 'site-theme'
+
+type ThemeContextValue = {
+  theme: Theme
+  setTheme: (theme: Theme) => void
+  toggle: () => void
+}
+
+const ThemeCtx = createContext<ThemeContextValue>({
+  theme: 'dark',
+  setTheme: () => {},
+  toggle: () => {},
+})
+
 export const useTheme = () => useContext(ThemeCtx)
 
 const LIGHT_BG =
@@ -17,47 +38,61 @@ const DARK_BG =
   'radial-gradient(900px 600px at 12% 8%, rgba(34,211,238,0.12) 0%, transparent 55%),' +
   'linear-gradient(180deg, #09090b 0%, #0b0b10 100%)'
 
+/** Reads any persisted choice, otherwise falls back to the OS preference, otherwise dark. */
+function getInitialTheme(): Theme {
+  if (typeof window === 'undefined') return 'dark'
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY)
+    if (stored === 'light' || stored === 'dark') return stored
+  } catch {
+    /* localStorage unavailable (e.g. private mode) — ignore and fall through */
+  }
+  if (window.matchMedia?.('(prefers-color-scheme: dark)').matches === false) {
+    return 'light'
+  }
+  return 'dark'
+}
+
 export default function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light')
+  // Start with the site's default (dark) on the server and on first paint, then
+  // sync to the persisted/OS preference right after mount to avoid a hydration
+  // mismatch while still respecting the user's stored choice almost instantly.
+  const [theme, setThemeState] = useState<Theme>('dark')
+  const [hydrated, setHydrated] = useState(false)
 
   useEffect(() => {
-    const ids = Object.keys(SECTION_THEME)
-    const els = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => Boolean(el))
-    if (!els.length) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const next = SECTION_THEME[entry.target.id]
-            if (next) setTheme(next)
-          }
-        })
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
-    )
-    els.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
+    setThemeState(getInitialTheme())
+    setHydrated(true)
   }, [])
 
   useEffect(() => {
+    if (!hydrated) return
     document.documentElement.dataset.theme = theme
-  }, [theme])
+    try {
+      window.localStorage.setItem(STORAGE_KEY, theme)
+    } catch {
+      /* ignore persistence errors */
+    }
+  }, [theme, hydrated])
 
-  const value = useMemo(() => theme, [theme])
+  const setTheme = useCallback((next: Theme) => setThemeState(next), [])
+  const toggle = useCallback(
+    () => setThemeState((t) => (t === 'dark' ? 'light' : 'dark')),
+    [],
+  )
+
+  const value = useMemo(() => ({ theme, setTheme, toggle }), [theme, setTheme, toggle])
 
   return (
     <ThemeCtx.Provider value={value}>
-      {/* Crossfading backdrop: light layer underneath, dark layer fades in. */}
+      {/* Crossfading backdrop: light layer underneath, dark layer fades in/out globally. */}
       <div className="fixed inset-0 -z-10" style={{ background: LIGHT_BG }} aria-hidden />
       <motion.div
         className="fixed inset-0 -z-10"
         style={{ background: DARK_BG }}
         initial={false}
         animate={{ opacity: theme === 'dark' ? 1 : 0 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         aria-hidden
       />
       {children}

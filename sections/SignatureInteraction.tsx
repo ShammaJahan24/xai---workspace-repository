@@ -145,9 +145,9 @@ export default function SignatureInteraction() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[340px_1fr]">
         
         {/* ---- Left Column: Curve Editor ---- */}
-        <div className="flex flex-col gap-4 rounded-3xl border border-zinc-800 bg-zinc-900/80 p-5 backdrop-blur-xl shadow-2xl">
+        <div className="flex flex-col gap-4 rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/80 p-5 backdrop-blur-xl shadow-2xl">
           <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1.5 font-mono text-xs font-medium tracking-wider text-zinc-400">
+            <span className="flex items-center gap-1.5 font-mono text-xs font-medium tracking-wider text-slate-600 dark:text-zinc-400">
               <Sliders className="h-3.5 w-3.5 text-cyan-400" /> EASING CURVE
             </span>
             <span className="rounded-full bg-cyan-500/10 px-2.5 py-0.5 font-mono text-xs text-cyan-400 border border-cyan-500/20">
@@ -156,7 +156,7 @@ export default function SignatureInteraction() {
           </div>
 
           {/* SVG Canvas */}
-          <div className="relative overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-950/80 p-2 shadow-inner">
+          <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-zinc-950/80 p-2 shadow-inner">
             <svg
               ref={svgRef}
               viewBox={`0 0 ${S} ${S}`}
@@ -236,41 +236,41 @@ export default function SignatureInteraction() {
           {/* CSS Output & Copy */}
           <button
             onClick={copy}
-            className="group flex w-full items-center justify-between gap-2 rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2.5 font-mono text-xs text-zinc-300 transition-all hover:border-cyan-500/40 hover:bg-zinc-900"
+            className="group flex w-full items-center justify-between gap-2 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/80 px-3.5 py-2.5 font-mono text-xs text-slate-700 dark:text-zinc-300 transition-all hover:border-cyan-500/40 hover:bg-white hover:dark:bg-zinc-900"
           >
             <span className="truncate">{cssValue}</span>
             {copied ? (
               <Check className="h-4 w-4 shrink-0 text-cyan-400" />
             ) : (
-              <Copy className="h-4 w-4 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300" />
+              <Copy className="h-4 w-4 shrink-0 text-slate-500 dark:text-zinc-500 transition-colors group-hover:text-slate-700 group-hover:dark:text-zinc-300" />
             )}
           </button>
 
           {/* Coordinate Readout */}
-          <div className="grid grid-cols-2 gap-2 text-[11px] font-mono text-zinc-400">
-            <div className="rounded-lg border border-zinc-800/80 bg-zinc-950/40 p-2">
+          <div className="grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-600 dark:text-zinc-400">
+            <div className="rounded-lg border border-slate-200/80 dark:border-zinc-800/80 bg-slate-50/80 dark:bg-zinc-950/40 p-2">
               <span className="text-cyan-400">P1: </span>({p1.x.toFixed(2)}, {p1.y.toFixed(2)})
             </div>
-            <div className="rounded-lg border border-zinc-800/80 bg-zinc-950/40 p-2">
+            <div className="rounded-lg border border-slate-200/80 dark:border-zinc-800/80 bg-slate-50/80 dark:bg-zinc-950/40 p-2">
               <span className="text-purple-400">P2: </span>({p2.x.toFixed(2)}, {p2.y.toFixed(2)})
             </div>
           </div>
         </div>
 
         {/* ---- Right Column: Live Interactive 3D/2D Showcase ---- */}
-        <div className="flex flex-col rounded-3xl border border-zinc-800 bg-zinc-900/80 p-5 backdrop-blur-xl shadow-2xl">
+        <div className="flex flex-col rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/80 p-5 backdrop-blur-xl shadow-2xl">
           
           {/* Header Controls */}
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             {/* View Mode Selector */}
-            <div className="flex items-center rounded-xl border border-zinc-800 bg-zinc-950/80 p-1">
+            <div className="flex items-center rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/80 p-1">
               <button
                 onClick={() => setViewMode('3d')}
                 className={cn(
                   'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all',
                   viewMode === '3d'
                     ? 'bg-gradient-to-r from-cyan-500 to-violet-600 text-white shadow-md'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    : 'text-slate-600 dark:text-zinc-400 hover:text-slate-800 hover:dark:text-zinc-200'
                 )}
               >
                 <Box className="h-3.5 w-3.5" /> 3D Stage
@@ -281,7 +281,7 @@ export default function SignatureInteraction() {
                   'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all',
                   viewMode === 'ui'
                     ? 'bg-gradient-to-r from-cyan-500 to-violet-600 text-white shadow-md'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    : 'text-slate-600 dark:text-zinc-400 hover:text-slate-800 hover:dark:text-zinc-200'
                 )}
               >
                 <Layers className="h-3.5 w-3.5" /> UI Card
@@ -292,7 +292,7 @@ export default function SignatureInteraction() {
                   'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all',
                   viewMode === 'rail'
                     ? 'bg-gradient-to-r from-cyan-500 to-violet-600 text-white shadow-md'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    : 'text-slate-600 dark:text-zinc-400 hover:text-slate-800 hover:dark:text-zinc-200'
                 )}
               >
                 <Move className="h-3.5 w-3.5" /> Motion Rail
@@ -303,7 +303,7 @@ export default function SignatureInteraction() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setLoop((l) => l + 1)}
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-700 bg-zinc-800/60 text-zinc-300 transition-colors hover:bg-zinc-700"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300 dark:border-zinc-700 bg-slate-100/70 dark:bg-zinc-800/60 text-slate-700 dark:text-zinc-300 transition-colors hover:bg-slate-200 hover:dark:bg-zinc-700"
                 title="Restart Animation"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
@@ -314,7 +314,7 @@ export default function SignatureInteraction() {
                   setLoop((l) => l + 1)
                   if (typeof playUISound === 'function') playUISound('toggle')
                 }}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-700 bg-zinc-800/80 px-3 py-1.5 text-xs font-medium text-zinc-200 transition-colors hover:bg-zinc-700"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 dark:border-zinc-700 bg-slate-100/90 dark:bg-zinc-800/80 px-3 py-1.5 text-xs font-medium text-slate-800 dark:text-zinc-200 transition-colors hover:bg-slate-200 hover:dark:bg-zinc-700"
               >
                 {playing ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
                 {playing ? 'Pause' : 'Play'}
@@ -324,7 +324,7 @@ export default function SignatureInteraction() {
 
           {/* Canvas Display Container */}
           <div
-            className="relative flex min-h-[320px] flex-1 items-center justify-center overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-950/60 p-6 perspective-[1000px]"
+            className="relative flex min-h-[320px] flex-1 items-center justify-center overflow-hidden rounded-2xl border border-slate-200/80 dark:border-zinc-800/80 bg-slate-50/70 dark:bg-zinc-950/60 p-6 perspective-[1000px]"
             onMouseMove={handleStageMouseMove}
             onMouseLeave={handleStageMouseLeave}
           >
@@ -339,7 +339,7 @@ export default function SignatureInteraction() {
                   rotateY,
                   transformStyle: 'preserve-3d',
                 }}
-                className="relative flex h-52 w-64 flex-col items-center justify-center rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 p-6 shadow-2xl backdrop-blur-md"
+                className="relative flex h-52 w-64 flex-col items-center justify-center rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-slate-50/90 dark:from-zinc-900/90 to-white/90 dark:to-zinc-950/90 p-6 shadow-2xl backdrop-blur-md"
               >
                 {/* Floating Depth Layers */}
                 <motion.div
@@ -372,12 +372,12 @@ export default function SignatureInteraction() {
                     <Sparkles className="h-6 w-6" />
                   </div>
                   <div className="text-center">
-                    <p className="font-mono text-xs font-semibold text-zinc-100">3D Spatial Motion</p>
+                    <p className="font-mono text-xs font-semibold text-slate-900 dark:text-zinc-100">3D Spatial Motion</p>
                     <p className="font-mono text-[10px] text-cyan-300/80">Depth & Rotation</p>
                   </div>
                 </motion.div>
 
-                <p className="absolute bottom-2 font-mono text-[10px] text-zinc-500">
+                <p className="absolute bottom-2 font-mono text-[10px] text-slate-500 dark:text-zinc-500">
                   Hover to orbit perspective
                 </p>
               </motion.div>
@@ -388,7 +388,7 @@ export default function SignatureInteraction() {
               <div className="w-full max-w-md">
                 <motion.div
                   key={`ui-card-${loop}-${playing}`}
-                  className="flex items-center gap-4 rounded-xl border border-zinc-700/80 bg-zinc-800/80 p-4 shadow-xl backdrop-blur-md"
+                  className="flex items-center gap-4 rounded-xl border border-slate-300/80 dark:border-zinc-700/80 bg-slate-100/90 dark:bg-zinc-800/80 p-4 shadow-xl backdrop-blur-md"
                   initial={{ opacity: 0, y: 35, scale: 0.95 }}
                   animate={
                     playing
@@ -403,8 +403,8 @@ export default function SignatureInteraction() {
                 >
                   <div className="h-10 w-10 shrink-0 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 shadow-md" />
                   <div className="flex-1 space-y-2">
-                    <div className="h-2.5 w-3/4 rounded-full bg-zinc-600" />
-                    <div className="h-2 w-1/2 rounded-full bg-zinc-700" />
+                    <div className="h-2.5 w-3/4 rounded-full bg-slate-300 dark:bg-zinc-600" />
+                    <div className="h-2 w-1/2 rounded-full bg-slate-200 dark:bg-zinc-700" />
                   </div>
                 </motion.div>
               </div>
@@ -414,7 +414,7 @@ export default function SignatureInteraction() {
             {viewMode === 'rail' && (
               <div className="relative w-full max-w-lg py-12">
                 {/* Track Line */}
-                <div className="absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-zinc-800" />
+                <div className="absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-slate-100 dark:bg-zinc-800" />
                 
                 {/* Ghost Trail */}
                 {ghosts.map((v, i) => (
@@ -446,8 +446,8 @@ export default function SignatureInteraction() {
           </div>
 
           {/* Interactive Scrubbing Slider */}
-          <div className="mt-4 rounded-xl border border-zinc-800 bg-zinc-950/40 p-3">
-            <div className="mb-1.5 flex items-center justify-between font-mono text-[11px] text-zinc-400">
+          <div className="mt-4 rounded-xl border border-slate-200 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-950/40 p-3">
+            <div className="mb-1.5 flex items-center justify-between font-mono text-[11px] text-slate-600 dark:text-zinc-400">
               <span>MANUAL SCRUBBER</span>
               <span className="text-cyan-400">{(scrubProgress * 100).toFixed(0)}%</span>
             </div>
@@ -469,7 +469,7 @@ export default function SignatureInteraction() {
 
           {/* Duration Slider */}
           <div className="mt-3 flex items-center gap-3">
-            <span className="font-mono text-[11px] font-medium text-zinc-400">DURATION</span>
+            <span className="font-mono text-[11px] font-medium text-slate-600 dark:text-zinc-400">DURATION</span>
             <input
               type="range"
               min={300}
@@ -482,7 +482,7 @@ export default function SignatureInteraction() {
               }}
               className="flex-1 accent-cyan-400"
             />
-            <span className="w-14 text-right font-mono text-xs text-zinc-300">{duration}ms</span>
+            <span className="w-14 text-right font-mono text-xs text-slate-700 dark:text-zinc-300">{duration}ms</span>
           </div>
 
           {/* Easing Presets */}
@@ -494,8 +494,8 @@ export default function SignatureInteraction() {
                 className={cn(
                   'rounded-lg border px-3 py-1.5 font-mono text-xs transition-all duration-200',
                   preset === pr.name
-                    ? 'border-cyan-500/50 bg-cyan-500/20 text-cyan-300 shadow-sm'
-                    : 'border-zinc-800 bg-zinc-950/40 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                    ? 'border-cyan-500/50 bg-cyan-500/10 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-300 shadow-sm'
+                    : 'border-slate-200 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-950/40 text-slate-600 dark:text-zinc-400 hover:border-slate-300 hover:dark:border-zinc-700 hover:text-slate-800 hover:dark:text-zinc-200'
                 )}
               >
                 {pr.name}

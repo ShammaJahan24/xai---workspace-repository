@@ -3,6 +3,7 @@
 import { motion, type Variants } from 'framer-motion'
 import type { ReactNode } from 'react'
 import Badge from '@/components/ui/Badge'
+import { useTheme } from '@/components/theme/ThemeProvider'
 import { cn } from '@/lib/utils'
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
@@ -14,6 +15,7 @@ type Props = {
   align?: 'left' | 'center'
   className?: string
   pulse?: boolean
+  /** Optional override — by default the heading follows the global theme. */
   tone?: 'dark' | 'light'
 }
 
@@ -34,10 +36,11 @@ export default function SectionHeading({
   align = 'left',
   className,
   pulse = true,
-  tone = 'dark',
+  tone,
 }: Props) {
+  const { theme } = useTheme()
+  const resolvedTone = tone ?? theme
   const centered = align === 'center'
-  const light = tone === 'light'
   return (
     <motion.div
       variants={container}
@@ -47,21 +50,18 @@ export default function SectionHeading({
       className={cn(centered ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl', className)}
     >
       <motion.div variants={item} className={cn(centered && 'flex justify-center')}>
-        <Badge pulse={pulse} tone={tone}>{eyebrow}</Badge>
+        <Badge pulse={pulse} tone={resolvedTone}>{eyebrow}</Badge>
       </motion.div>
       <motion.h2
         variants={item}
-        className={cn(
-          'mt-5 text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl',
-          light ? 'text-slate-900' : 'text-zinc-100',
-        )}
+        className="mt-5 text-3xl font-semibold tracking-tight text-slate-900 dark:text-zinc-100 sm:text-4xl md:text-5xl"
       >
         {title}
       </motion.h2>
       {description && (
         <motion.p
           variants={item}
-          className={cn('mt-4 max-w-xl', light ? 'text-slate-600' : 'text-zinc-400', centered && 'mx-auto')}
+          className={cn('mt-4 max-w-xl text-slate-600 dark:text-zinc-400', centered && 'mx-auto')}
         >
           {description}
         </motion.p>

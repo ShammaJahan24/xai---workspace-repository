@@ -1,8 +1,22 @@
 @import "tailwindcss";
 
+/*
+ * Manual theme switch: the app sets data-theme="light" | "dark" on <html>
+ * (see components/theme/ThemeProvider.tsx). This custom variant makes the
+ * standard Tailwind `dark:` prefix key off that attribute instead of the
+ * `prefers-color-scheme` media query, so every section can use `dark:` and
+ * flip instantly with the manual toggle.
+ */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 :root {
   --background: #09090b; /* Zinc 950 */
   --foreground: #fafafa; /* Zinc 50 */
+}
+
+:root[data-theme='light'] {
+  --background: #eef1f8;
+  --foreground: #0f172a; /* Slate 900 */
 }
 
 html {
@@ -36,11 +50,29 @@ section[id] {
   backdrop-filter: blur(14px);
 }
 
+/*
+ * Theme-aware frosted surface: resolves to the light or dark glass recipe
+ * from the single global `data-theme` attribute, so callers no longer need
+ * to pick `.glass` vs `.glass-light` themselves based on the section.
+ */
+.glass-surface {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+}
+:root[data-theme='light'] .glass-surface {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.55));
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
 .text-gradient {
   background-image: linear-gradient(100deg, #e4e4e7 0%, #67e8f9 45%, #a78bfa 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+:root[data-theme='light'] .text-gradient {
+  background-image: linear-gradient(100deg, #1e293b 0%, #4f46e5 45%, #7c3aed 100%);
 }
 
 /* Custom scrollbar to match Linear / Vercel dark aesthetics */
@@ -58,6 +90,16 @@ section[id] {
   background: #3f3f46;
 }
 
+:root[data-theme='light'] ::-webkit-scrollbar-track {
+  background: #eef1f8;
+}
+:root[data-theme='light'] ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+:root[data-theme='light'] ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
@@ -69,6 +111,10 @@ section[id] {
 ::selection {
   background: rgba(34, 211, 238, 0.3);
   color: #fff;
+}
+:root[data-theme='light'] ::selection {
+  background: rgba(99, 102, 241, 0.25);
+  color: #0f172a;
 }
 
 /* Smooth, consistent easing for interactive elements. */
