@@ -10,7 +10,10 @@ that plays your timing back on a real transition.
 > Concept prototype built for a frontend engineering challenge. Not affiliated
 > with any real product.
 
-📹 **[Watch the 3-minute walkthrough](https://drive.google.com/PASTE_YOUR_SHARE_LINK_HERE)** — narrated tour of the animation and interaction decisions. (Recording script: [`VIDEO_SCRIPT.md`](./VIDEO_SCRIPT.md))
+Live site link: (https://xai-workspace-repository.vercel.app/#flow)**
+Youtube video link : (https://drive.google.com/PASTE_YOUR_SHARE_LINK_HERE)**
+Figma :(https://www.figma.com/design/059umChDQqMCWEMVk7R8Fk/Untitled?node-id=0-1&t=XAijZACLSjsX2xcc-1)**
+
 
 ---
 
